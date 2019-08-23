@@ -82,71 +82,71 @@ for file in fileList :
 tryCnt = ["{}".format(i) for i in range(1, 1001)]        
 page = Page()
 for i in range(len(apiList)) : 
-        # 막대 차트 그리기
-        ichart = (
-            Bar()
-            # X축에 표시될 값들을 리스트 객체로 넘긴다. 아래 값은 1부터 1000까지
-            .add_xaxis(tryCnt)
-            # Y축에 표시될 값들을 리스트 객체로 넘긴다. color 파라미터로 색상 지정가능하며 아래는 랜덤 컬러가 부여된다
-            .add_yaxis("경과시간(단위:ms)", timeList[i], color=Faker.rand_color())
-            .set_global_opts(
-                # 타이틀 및 서브타이틀 지정 가능
-                title_opts=opts.TitleOpts(
-                    title='요청별 응답시간', pos_right="2%",title_textstyle_opts=opts.TextStyleOpts(font_size=15)
-                    ,subtitle='최대 응답속도 :'+str(maxTimeList[i])+'ms\n평균 응답속도: '+str(averageTimeList[i])+'ms'
-                ),
-                # 인터렉티브 차트 기능인 줌 기능 설정 inside, 수직, 수평을 설정했다 (필요없을 시 인자에서 빼주면된다)
-                datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(orient="vertical"), opts.DataZoomOpts(type_="inside")],
-                # 막대 차트의 값 분류들의 위치 지정 (서브 타이틀쪽에 표시된다)
-                legend_opts=opts.LegendOpts(pos_right="30%"),
-            )        
-            .set_series_opts(
-                label_opts=opts.LabelOpts(is_show=False),
-                # 유의미한 특정 부분을 강조할때 사용된다. 아래는 라인(화살표)형태로 표시되며 markpoint 형식도 따로 있다.
-                markline_opts=opts.MarkLineOpts(
-                    data=[
-                        # 최소,최대,평균값을 알아서 표시해준다
-                        opts.MarkLineItem(type_="min", name="최소"),
-                        opts.MarkLineItem(type_="max", name="최대"),
-                        opts.MarkLineItem(type_="average", name="평균"),
-                    ]
-                ),
-            )        
-        )
-        # 응답시간 그룹별 키와 값을 추출하여 각각 분류와 값 리스트에 담는다.
-        groupDict = timeGroup[i]
-        nameList = list()
-        valueList = list()
-        for k,v in groupDict.items() :
-            nameList.append(k)
-            valueList.append(v)
-
-        # 파이 차트 그리기
-        pchart = (
-            Pie()
-            .add("", [list(z) for z in zip(nameList, valueList)], center=["20%", "50%"]) # center에서 위치를 조정한다 첫번째 20%는 X축기준, 두번째는 Y축기준     
-            .set_colors(["blue", "green", "yellow", "red", "pink", "orange", "purple"])
-            .set_global_opts(
-                # 타이틀 설정 pos_left(right,top,bottom등)로 위치 조절 가능
-                title_opts=opts.TitleOpts(title=apiList[i]+" 응답시간 분류",title_textstyle_opts=opts.TextStyleOpts(font_size=15), subtitle='100 = 100ms 이하', pos_left="2%"),
-                # 파이 차트 분류별 색상표의 수직,수평 또는 위치를 지정해준다
-                legend_opts=opts.LegendOpts(
-                    orient="vertical", pos_top="15%", pos_left="2%"
-                )
-            )
-            # 파이 차트에서 표시되는 값 형식 지정 아래와 같을 경우 900ms 응답그룹이 533명일 경우 900: 533으로 표시된다.
-            .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))            
+    # 막대 차트 그리기
+    ichart = (
+        Bar()
+        # X축에 표시될 값들을 리스트 객체로 넘긴다. 아래 값은 1부터 1000까지
+        .add_xaxis(tryCnt)
+        # Y축에 표시될 값들을 리스트 객체로 넘긴다. color 파라미터로 색상 지정가능하며 아래는 랜덤 컬러가 부여된다
+        .add_yaxis("경과시간(단위:ms)", timeList[i], color=Faker.rand_color())
+        .set_global_opts(
+            # 타이틀 및 서브타이틀 지정 가능
+            title_opts=opts.TitleOpts(
+                title='요청별 응답시간', pos_right="2%",title_textstyle_opts=opts.TextStyleOpts(font_size=15)
+                ,subtitle='최대 응답속도 :'+str(maxTimeList[i])+'ms\n평균 응답속도: '+str(averageTimeList[i])+'ms'
+            ),
+            # 인터렉티브 차트 기능인 줌 기능 설정 inside, 수직, 수평을 설정했다 (필요없을 시 인자에서 빼주면된다)
+            datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(orient="vertical"), opts.DataZoomOpts(type_="inside")],
+            # 막대 차트의 값 분류들의 위치 지정 (서브 타이틀쪽에 표시된다)
+            legend_opts=opts.LegendOpts(pos_right="30%"),
         )        
+        .set_series_opts(
+            label_opts=opts.LabelOpts(is_show=False),
+            # 유의미한 특정 부분을 강조할때 사용된다. 아래는 라인(화살표)형태로 표시되며 markpoint 형식도 따로 있다.
+            markline_opts=opts.MarkLineOpts(
+                data=[
+                    # 최소,최대,평균값을 알아서 표시해준다
+                    opts.MarkLineItem(type_="min", name="최소"),
+                    opts.MarkLineItem(type_="max", name="최대"),
+                    opts.MarkLineItem(type_="average", name="평균"),
+                ]
+            ),
+        )        
+    )
+    # 응답시간 그룹별 키와 값을 추출하여 각각 분류와 값 리스트에 담는다.
+    groupDict = timeGroup[i]
+    nameList = list()
+    valueList = list()
+    for k,v in groupDict.items() :
+        nameList.append(k)
+        valueList.append(v)
 
-        # 막대차트와, 파이 차트를 그리드로 묶는다
-        grid = (
-            Grid()
-            .add(ichart, grid_opts=opts.GridOpts(pos_left="40%"))
-            .add(pchart, grid_opts=opts.GridOpts(pos_right="50%"))
+    # 파이 차트 그리기
+    pchart = (
+        Pie()
+        .add("", [list(z) for z in zip(nameList, valueList)], center=["20%", "50%"]) # center에서 위치를 조정한다 첫번째 20%는 X축기준, 두번째는 Y축기준     
+        .set_colors(["blue", "green", "yellow", "red", "pink", "orange", "purple"])
+        .set_global_opts(
+            # 타이틀 설정 pos_left(right,top,bottom등)로 위치 조절 가능
+            title_opts=opts.TitleOpts(title=apiList[i]+" 응답시간 분류",title_textstyle_opts=opts.TextStyleOpts(font_size=15), subtitle='100 = 100ms 이하', pos_left="2%"),
+            # 파이 차트 분류별 색상표의 수직,수평 또는 위치를 지정해준다
+            legend_opts=opts.LegendOpts(
+                orient="vertical", pos_top="15%", pos_left="2%"
+            )
         )
-        # 묶은 그리드를 페이지 객체에 추가
-        page.add(grid)
-    # End of For
+        # 파이 차트에서 표시되는 값 형식 지정 아래와 같을 경우 900ms 응답그룹이 533명일 경우 900: 533으로 표시된다.
+        .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))            
+    )        
+
+    # 막대차트와, 파이 차트를 그리드로 묶는다
+    grid = (
+        Grid()
+        .add(ichart, grid_opts=opts.GridOpts(pos_left="40%"))
+        .add(pchart, grid_opts=opts.GridOpts(pos_right="50%"))
+    )
+    # 묶은 그리드를 페이지 객체에 추가
+    page.add(grid)
+# End of For
 
 # 페이지 객체에 들어있는 챠트들을 명시된 파일명으로 한페이지 출력
 page.render('D:\\Documents\\StressTestResult\\reports_interactive.html')    
