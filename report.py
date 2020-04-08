@@ -28,7 +28,6 @@ def groupTime(time) :
     else :
         timeTable[time] = 1
     return timeTable
-    
 
 while True :
     try :
@@ -46,7 +45,7 @@ while True :
         print('!존재하지 않는 디렉토리입니다. 다시 입력해주세요!')
         continue
     else : break
-
+#test
 timeList = list()
 passList = list()
 failList = list()
