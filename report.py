@@ -30,6 +30,7 @@ def groupTime(time) :
     return timeTable
     
 
+
 while True :
     try :
         dirName = input('리포트를 작성할 데이터들이 들어있는 디렉토리를 입력하세요(중단하려면 q)\n파일명에 postman_test_run이 들어가있어야함\n:')            
